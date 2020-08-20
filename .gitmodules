@@ -1,0 +1,6 @@
+[submodule "3rdparty/gperftools"]
+	path = 3rdparty/gperftools
+	url = https://github.com/gperftools/gperftools.git
+[submodule "3rdparty/spdlog"]
+	path = 3rdparty/spdlog
+	url = https://github.com/gabime/spdlog.git
