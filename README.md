@@ -1,4 +1,6 @@
 # Runtime方法
+C++运行时资源管理模块
+
 
 # 关于
 用于管理运行时的资源, 线程池和内存池.
@@ -76,4 +78,9 @@ git merge --no-ff develop   // 将develop合到当前master分支
 3. 打tag
 ```
 git tag -a 1.2
+```
+
+4. 删除本地无用分支(同步至远端状态)
+```
+git remote prune origin
 ```
