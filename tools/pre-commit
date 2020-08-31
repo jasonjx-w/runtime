@@ -1,4 +1,8 @@
 #!/bin/sh
+
+# remove useless branches
+git remote prune origin
+
 CHANGED=`git diff --name-only`
 if [ -z $CHANGED ]; then
   exit 0
