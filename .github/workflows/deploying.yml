@@ -43,6 +43,11 @@ jobs:
         source env.sh
         ./build.sh
 
+    - name: Deploy
+      run: |
+        cd build/
+        ./runtime-gtest --gtest_also_run_disabled_tests --gtest_repeat=5
+
   # This workflow contains a single job called "build"
   ubuntu-deploy:
     # The type of runner that the job will run on
@@ -69,3 +74,8 @@ jobs:
 
     - name: Build
       run: ./build.sh
+
+    - name: Deploy
+      run: |
+        cd build/
+        ./runtime-gtest --gtest_also_run_disabled_tests --gtest_repeat=5
