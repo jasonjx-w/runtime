@@ -73,7 +73,9 @@ jobs:
         git submodule update --init --remote --recursive
 
     - name: Build
-      run: ./build.sh
+      run: |
+        source env.sh
+        ./build.sh
 
     - name: Deploy
       run: |

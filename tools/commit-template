@@ -1,4 +1,4 @@
-[verb]: Add your title here
+[verb]: Add your title here(#issue-id)
 
 
 # Why is this change happening, e.g. goals, use cases, stories, etc.?
@@ -18,21 +18,22 @@
 #
 # Subject line imperative uppercase verbs:
 #
-#   Fix      = Fix an issue e.g. bug, typo, accident, misstatement.
-#   Add      = Create a capability e.g. feature, test, dependency.
-#   Drop     = Delete a capability e.g. feature, test, dependency.
-#   Bump     = Increase the version of something e.g. a dependency.
+#   fix  = Fix an issue e.g. bug, typo, accident, misstatement.
+#   feat = Create a capability e.g. feature, test, dependency.
+#   drop = Delete a capability e.g. feature, test, dependency.
+#
+#   bump = Increase the version of something e.g. a dependency.
+#   make = Change the build process, or tools, or infrastructure.
 #   
-#   Start    = Begin doing something; e.g. enable a toggle, feature flag, etc.
-#   Stop     = End doing something; e.g. disable a toggle, feature flag, etc.
+#   start = Begin doing something; e.g. enable a toggle, feature flag, etc.
+#   stop  = End doing something; e.g. disable a toggle, feature flag, etc.
 #
-#   Make     = Change the build process, or tools, or infrastructure.
+#   doc = A change that MUST be only in the documentation, e.g. help files.
+#   opt = A change that MUST be just about performance, e.g. speed up code.
 #
-#   Document = A change that MUST be only in the documentation, e.g. help files.
-#   Optimize = A change that MUST be just about performance, e.g. speed up code.
-#   Refactor = A change that MUST be just refactoring.
-#   Reformat = A change that MUST be just format, e.g. indent line, trim space, etc.
-#   Rephrase = A change that MUST be just textual, e.g. edit a comment, doc, etc.
+#   refactor = A change that MUST be just refactoring.
+#   reformat = A change that MUST be just format, e.g. indent line, trim space, etc.
+#   rephrase = A change that MUST be just textual, e.g. edit a comment, doc, etc.
 #
 # For the subject line:
 #   * Use 50 characters maximum.

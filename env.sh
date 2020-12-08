@@ -4,19 +4,40 @@ set -e
 #########################################################
 #   config
 #########################################################
-export PATH=$PATH:/${PWD}/build/bin
-export LIBRARY_PATH=$LIBRARY_PATH:/${PWD}/build/lib
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/${PWD}/build/lib
+echo "-- Config PATH/LIBRARY_PATH/LD_LIBRARY_PATH ..."
+export PATH=${PWD}/build/bin:$PATH
+export LIBRARY_PATH=${PWD}/build/lib:$LIBRARY_PATH
+export LD_LIBRARY_PATH=${PWD}/build/lib:$LD_LIBRARY_PATH
 
+echo "-- Config git hooks ..."
 if [ -d "${PWD}/.git/" ]; then
-  if [ -f "${PWD}/tools/commit-template" ]; then
-    git config --local commit.template tools/commit-template
+  # .git is dir, use config files in tools/
+  COMMIT_TEMPLATE="${PWD}/tools/commit-template"
+  if [ -f $COMMIT_TEMPLATE ]; then
+    git config --local commit.template $COMMIT_TEMPLATE
+    echo "-- Set commit-template as ${COMMIT_TEMPLATE}."
   fi
 
+  PRE_COMMIT="${PWD}/tools/pre-commit"
   if [ -f "${PWD}/.git/hooks/pre-commit" ]; then
-    rm -r ${PWD}/.git/hooks/pre-commit
+    rm -f ${PWD}/.git/hooks/pre-commit
   fi
-  ln -sf ${PWD}/tools/pre-commit ${PWD}/.git/hooks
+  ln -sf $PRE_COMMIT ${PWD}/.git/hooks
+  echo "-- Set pre-commit as ${PRE_COMMIT}."
+elif [ -f "${PWD}/.git" ]; then
+  # .git is file, use config files in ../tools/
+  COMMIT_TEMPLATE="${PWD}/../tools/commit-template"
+  if [ -f $COMMIT_TEMPLATE ]; then
+    git config --local commit.template $COMMIT_TEMPLATE
+    echo "-- Set commit-template as ${COMMIT_TEMPLATE}."
+  fi
+
+  PRE_COMMIT="${PWD}/../tools/pre-commit"
+  if [ -f "${PWD}/../.git/hooks/pre-commit" ]; then
+    rm -r ${PWD}/../.git/hooks/pre-commit
+  fi
+  ln -sf $PRE_COMMIT ${PWD}/../.git/hooks
+  echo "-- Set pre-commit as ${PRE_COMMIT}."
 fi
 
 export RUNTIME_BUILD_ENV_ENABLED=1

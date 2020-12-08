@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 #
 # An example hook script to verify what is about to be committed.
 # Called by "git commit" with no arguments.  The hook should
@@ -6,8 +6,11 @@
 # it wants to stop the commit.
 #
 # To enable this hook, rename this file to "pre-commit".
+echo "-- [pre-commit] Preparing commit..."
+RET=0
 
 # remove useless branches
+echo "-- [pre-commit] Removing useless branch..."
 git remote prune origin
 
 if git rev-parse --verify HEAD >/dev/null 2>&1
@@ -45,22 +48,24 @@ If you know what you are doing you can disable this check using:
 
   git config hooks.allownonascii true
 EOF
-	exit 1
+	RET=1
 fi
-# 
-# # If there are whitespace errors, print the offending file names and fail.
-# exec git diff-index --check --cached $against --
 
-# # grep changed files
-CHANGED=`git diff --name-only`
-if [ -z $CHANGED ]; then
-  exit 0
-else
-  CF=`which clang-format`
-  if [ "$CF" != "" ]; then
-    for it in $CHANGED; do
-      $CF -i -style=.clang-format $it
-      git add $it
-    done
-  fi
-fi
+# format code
+# CHANGED_CODE=$(git diff --cached --name-only)
+# if [ -z "$CHANGED_CODE" ]; then
+#   exit $RET
+# fi
+# CLANG_FORMAT=`which clang-format`
+# if [ "$CLANG_FORMAT" != "" ]; then
+#   echo "-- [pre-commit] Using clang-format to format code..."
+#   for item in $CHANGED_CODE; do
+#     echo "-- [pre-commit] Formatting $item..."
+#     $CLANG_FORMAT -i -style=.clang-foramt $item
+#     # git add $item
+#   done
+# else
+#   echo "-- [pre-commit] Didn't find clang-format, skip formating code..."
+# fi
+
+exit $RET
