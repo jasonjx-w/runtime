@@ -30,6 +30,11 @@ if [ $# != 0 ]; then
   done
 fi
 
+# 4.force checking env.sh
+if [ ! ${RUNTIME_BUILD_ENV_ENABLED} ]; then
+  echo "--Please source env.sh before build."
+  exit -1
+fi
 
 ##################################
 # build
