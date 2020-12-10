@@ -27,6 +27,10 @@ class ThreadPool {
     std::mutex mtx;
     std::condition_variable cond;
     std::queue<std::function<void()>> tasks;
+    std::vector<std::thread> workers;
+    // for join(), if not, caller need care about
+    // when all these tasks finish, then dtor this threadpool. 
+    // but this is not necessary.
     bool is_shutdown = false;
   };
   std::shared_ptr<Context> ctx_;

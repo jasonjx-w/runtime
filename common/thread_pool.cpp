@@ -3,7 +3,7 @@
 ThreadPool::ThreadPool(size_t thread_count) {
   ctx_ = std::make_shared<Context>();
 
-  auto work = [ctx=ctx_] {
+  auto work = [ctx = ctx_] {
     std::unique_lock<std::mutex> lk(ctx->mtx);
     for (;;) {
       if (!ctx->tasks.empty()) {
@@ -21,7 +21,7 @@ ThreadPool::ThreadPool(size_t thread_count) {
   };
 
   for (size_t i = 0; i < thread_count; ++i) {
-    std::thread(work).detach();
+    ctx_->workers.emplace_back(work);
   }
 }
 
@@ -32,5 +32,8 @@ ThreadPool::~ThreadPool() {
       ctx_->is_shutdown = true;
     }
     ctx_->cond.notify_all();
+  }
+  for (std::thread &worker : ctx_->workers) {
+    worker.join();
   }
 }
