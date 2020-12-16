@@ -3,7 +3,7 @@
 
 namespace runtime {
 
-class DeviceAllocator {
+class MemoryPool {
  public:
   void *Allocate(size_t unused_alignment, size_t num_bytes);
   void Deallocate(void *ptr, size_t num_bytes = 0);
