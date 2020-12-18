@@ -1,3 +1,6 @@
+#ifndef RUNTIME_COMMON_THREAD_POOL_H_
+#define RUNTIME_COMMON_THREAD_POOL_H_
+
 #include <mutex>
 #include <condition_variable>
 #include <functional>
@@ -35,3 +38,5 @@ class ThreadPool {
   };
   std::shared_ptr<Context> ctx_;
 };
+
+#endif  // RUNTIME_COMMON_THREAD_POOL_H_

@@ -1,6 +1,8 @@
+#ifndef RUNTIME_COMMON_LOGGING_H_
+#define RUNTIME_COMMON_LOGGING_H_
+
 #include <iostream>
 #include <sstream>
-#include "spdlog/spdlog.h"
 
 namespace runtime {
 
@@ -60,3 +62,5 @@ namespace runtime {
 // };
 // 
 }  // namespace runtime
+
+#endif  // RUNTIME_COMMON_LOGGING_H_

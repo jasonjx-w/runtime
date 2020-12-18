@@ -1,3 +1,6 @@
+#ifndef RUNTIME_COMMON_MEMORY_POOL_H_
+#define RUNTIME_COMMON_MEMORY_POOL_H_ 
+
 #include "logging.h"
 #include <iostream>
 
@@ -10,3 +13,5 @@ class MemoryPool {
 };
 
 }  // namespace runtime
+
+#endif  // RUNTIME_COMMON_MEMORY_POOL_H_

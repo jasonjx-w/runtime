@@ -108,6 +108,10 @@ else()
   message(FATAL_ERROR "Google test is not exit.")
 endif()
 
+if(NOT RUNTIME_JUST_LIBRARY)
+  add_definitions(-DRUNTIME_DEBUG);
+endif()
+
 file(GLOB_RECURSE SOURCES "${COMMON_SOURCE_DIR}/*.cpp" "${GPU_SOURCE_DIR}/*.cpp" "${CPU_SOURCE_DIR}/*.cpp")
 add_library(${MODULE_NAME} ${SOURCES})
 target_include_directories(${MODULE_NAME} PUBLIC  ${${MODULE_NAME}_SOURCE_DIR})  # .h of this dir.
@@ -126,16 +130,4 @@ else()
   add_executable(runtime-gtest ${TEST_SOURCE_DIR}/main.cpp ${TEST_SOURCES})
   target_include_directories(runtime-gtest PRIVATE ${GOOGLETEST_DIR}/googletest/include)
   target_link_libraries(runtime-gtest ${MODULE_NAME} gtest)
-
-  # enable_testing()
-  # find_program(FIND find)
-  # find_program(FILE file)
-  # find_program(GREP grep)
-  # if((FIND) AND (FILE) AND (GREP))
-  #     add_test(
-  #       NAME "just_ascii"
-  #       COMMAND sh -c "${FIND}  include src windows tools singleheader tests examples benchmark -path benchmark/checkperf-reference -prune -name '*.h'  -o -name '*.cpp' -type f  -exec ${FILE} '{}' \; |${GREP} -v ASCII || exit 0  && exit 1"
-  #       WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-  #     )
-  # endif()
 endif()
