@@ -12,11 +12,19 @@ constexpr size_t BFCMemoryPool::MAX_FRAGMENTATION_SIZE;
 #ifndef RUNTIME_JUST_LIBRARY
 BFCMemoryPool::PeepInfo BFCMemoryPool::Peep() {
   PeepInfo res;
+  // bins info
   res.bin_num = bins_.size();
+  // free chunks info
   for (auto it : bins_) {
-    res.free_chunk_num.emplace_back(it.free_chunks().size());
+    std::vector<std::pair<size_t, size_t>> temp;
+    for (auto c : it.free_chunks) {
+      temp.emplace_back(std::make_pair(c->allocated_size, c->requested_size));
+    }
+    res.free_chunks.emplace_back(temp);
   }
-  res.region_num = region_manager_.Regions().size();
+  // regions info
+  res.region_num = region_manager_->Regions().size();
+  return res;
 }
 #endif
 

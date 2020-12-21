@@ -108,9 +108,9 @@ else()
   message(FATAL_ERROR "Google test is not exit.")
 endif()
 
-if(NOT RUNTIME_JUST_LIBRARY)
-  add_definitions(-DRUNTIME_DEBUG);
-endif()
+# if(NOT RUNTIME_JUST_LIBRARY)
+#   add_definitions(-DRUNTIME_DEBUG);
+# endif()
 
 file(GLOB_RECURSE SOURCES "${COMMON_SOURCE_DIR}/*.cpp" "${GPU_SOURCE_DIR}/*.cpp" "${CPU_SOURCE_DIR}/*.cpp")
 add_library(${MODULE_NAME} ${SOURCES})

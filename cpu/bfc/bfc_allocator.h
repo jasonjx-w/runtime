@@ -37,8 +37,14 @@ public:
 #ifndef RUNTIME_JUST_LIBRARY
   // only for debug and test
   struct PeepInfo {
+    // the num of bin 
     size_t bin_num = 0;
-    std::vector<size_t> free_chunk_num;
+    // free chunks for each bin
+    // vector outside is for each bin
+    // vector inside is for bin's chunks
+    // 1 is allocated_size; 2 is requested_size
+    std::vector<std::vector<std::pair<size_t, size_t>>> free_chunks;
+    // the num of region
     size_t region_num = 0;
   };
   PeepInfo Peep();
