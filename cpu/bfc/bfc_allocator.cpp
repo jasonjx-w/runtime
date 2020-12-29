@@ -149,6 +149,7 @@ bool BFCMemoryPool::Extend(size_t unused_alignment, size_t rounded_bytes) {
 
 BFCMemoryPool::Handle BFCMemoryPool::ChooseChunk(BFCMemoryPool::BinId bin_id, size_t rounded_bytes,
                                                  size_t num_bytes, uint64_t freed_before) {
+  Handle res = nullptr;
   for (; bin_id < MAX_BIN_NUM; bin_id++) {
     // begin at smallest bin
     // if didn't find free chunk then find in next bigger bin, repeat until find it.
@@ -170,8 +171,9 @@ BFCMemoryPool::Handle BFCMemoryPool::ChooseChunk(BFCMemoryPool::BinId bin_id, si
         // 3. update allocator record
         //
         // remove chunk from free_chunks
+        res = (*it);
         bin->free_chunks.erase(it);
-        return (*it);
+        return res;
       }
       // next free chunk
     }
@@ -179,7 +181,7 @@ BFCMemoryPool::Handle BFCMemoryPool::ChooseChunk(BFCMemoryPool::BinId bin_id, si
   }
 
   // don't find chunk
-  return nullptr;
+  return res;
 }
 
 // shrink current chunk, split into 2 chunks.
@@ -302,10 +304,10 @@ BFCMemoryPool::RegionManager::RemoveRegion(std::vector<BFCMemoryPool::RegionMana
 // return the region contains p
 // if not found, return nullptr
 BFCMemoryPool::RegionManager::Region *BFCMemoryPool::RegionManager::GetRegion(const void *ptr) {
-  auto it = std::upper_bound(regions_.begin(), regions_.end(), ptr,
-                             [](const void *p, Region r) { return p < r.end_at; });
-  if (it != regions_.end()) {
-    return &(*it);
+  for (auto it = regions_.begin(), it != regions_.end(); ++it) {
+    if (ptr < it->end_at) {
+      return &(*it);
+    }
   }
   return nullptr;
 }
