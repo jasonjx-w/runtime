@@ -95,6 +95,10 @@ void BFCMemoryPool::Deallocate(void *ptr) {
   // init region manager
   // merge next/prev into current chunk if possible.
   ExpandChunk(h, false);
+
+  auto bin_id = GetBinId(h->allocated_size);
+  bins_.at(bin_id).free_chunks.insert(h);
+  h->belong_to = bin_id;
 }
 
 // allocate new memory space
